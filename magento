@@ -1,0 +1,19 @@
+upstream fastcgi_backend {
+  server fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name  example.com www.example.com;
+    index  index.php;
+
+    set $MAGE_ROOT /var/www/html/magento;
+    set $MAGE_MODE production;
+
+    access_log /var/log/nginx/example.com-access.log;
+    error_log /var/log/nginx/example.com-error.log;
+
+    include /var/www/html/magento/nginx.conf.sample;
+}
